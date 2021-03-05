@@ -1,0 +1,43 @@
+#! /usr/bin/env python3
+
+# Note: Ensure that the user running this script is a member of the `gpio` group.
+
+import Adafruit_DHT
+
+DHT_SENSOR = Adafruit_DHT.DHT22
+OUTSIDE_DHT_PIN = 4  # GPIO4 is pin 7
+INSIDE_DHT_PIN = 24  # GPIO22 is pin 15
+
+while True:
+    inside_humidity, inside_temperature = Adafruit_DHT.read_retry(
+        DHT_SENSOR, INSIDE_DHT_PIN, retries=3, delay_seconds=2
+    )
+    outside_humidity, outside_temperature = Adafruit_DHT.read_retry(
+        DHT_SENSOR, OUTSIDE_DHT_PIN, retries=3, delay_seconds=2
+    )
+
+    if inside_humidity is not None and inside_temperature is not None:
+        print(
+            "Inside Temp={0:0.1f}*C Humidity={1:0.1f}%".format(
+                inside_temperature, inside_humidity
+            )
+        )
+    else:
+        print(
+            "Failed to retrieve data from inside humidity sensor on GPIO"
+            + str(INSIDE_DHT_PIN)
+            + "."
+        )
+
+    if outside_humidity is not None and outside_temperature is not None:
+        print(
+            "Outside Temp={0:0.1f}*C Humidity={1:0.1f}%".format(
+                outside_temperature, outside_humidity
+            )
+        )
+    else:
+        print(
+            "Failed to retrieve data from outside humidity sensor on GPIO"
+            + str(OUTSIDE_DHT_PIN)
+            + "."
+        )
