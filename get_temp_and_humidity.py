@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 
 # Note: Ensure that the user running this script is a member of the `gpio` group.
+# sudo usermod -a -G gpio dd-agent
+# Note: Install the Adafruit_DHT module to the DD embedded python
+# sudo -Hu dd-agent /opt/datadog-agent/embedded/bin/pip3 install Adafruit_DHT
 
 from datadog_checks.base import AgentCheck
 import Adafruit_DHT
