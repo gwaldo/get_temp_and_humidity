@@ -16,25 +16,10 @@ outside_humidity, outside_temperature = Adafruit_DHT.read_retry(
     DHT_SENSOR, OUTSIDE_DHT_PIN, retries=3, delay_seconds=2
 )
 
-if inside_humidity is not None and inside_temperature is not None:
-    print(
-        "Inside Temp={0:0.1f}*C Humidity={1:0.1f}%".format(
-            inside_temperature, inside_humidity
-        )
-    )
-
-
-if outside_humidity is not None and outside_temperature is not None:
-    print(
-        "Outside Temp={0:0.1f}*C Humidity={1:0.1f}%".format(
-            outside_temperature, outside_humidity
-        )
-    )
-
 
 class TempHumidityCheck(AgentCheck):
     def check(self, instance):
         self.gauge("home.inside.temp", inside_temperature)
-        self.gauge("home.inside.humidity", inside_temperature)
-        self.gauge("home.outside.temp", inside_temperature)
-        self.gauge("home.outside.humidity", inside_temperature)
+        self.gauge("home.inside.humidity", inside_humidity)
+        self.gauge("home.outside.temp", outside_temperature)
+        self.gauge("home.outside.humidity", outside_humidity)
